@@ -1,0 +1,51 @@
+<%- include("partials/header"); -%>
+<h1>Compose</h1>
+<form action="/update/<%= blog._id %>?_method=PUT" method="post">
+  <label for="">Title</label>
+  <% console.log(blog.title) %>
+  <textarea
+    class="form-control"
+    name="postTitle"
+    placeholder="Blog Title"
+  /><%= blog.title %></textarea>
+  <label for="">Post</label>
+  <div id="" style="color: rgba(2, 2, 2, 0.851)">
+    <textarea
+      id="summernote"
+      class="compose-data"
+      name="postData"
+      cols="30"
+      rows="10"
+    ><%= blog.content %></textarea>
+  </div>
+  <button class="btn btn-primary" type="submit" name="button">Publish</button>
+</form>
+<script src="/css/test.js"></script>
+<script>
+  $("#summernote").summernote({
+    toolbar: [
+      ["style", ["style"]],
+      [
+        "font",
+        [
+          "bold",
+          "underline",
+          "clear",
+          "fontsize",
+          "strikethrough",
+          "color",
+          "forecolor",
+          "backcolor",
+        ],
+      ],
+      ["fontname", ["fontname"]],
+      ["color", ["color"]],
+      ["para", ["ul", "ol", "paragraph", "height"]],
+      ["table", ["table"]],
+      ["insert", ["link", "picture", "video"]],
+      ["view", ["fullscreen", "codeview", "help", "undo", "redo"]],
+    ],
+  });
+</script>
+
+<%- include('partials/footer'); -%>

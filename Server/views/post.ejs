@@ -1,0 +1,36 @@
+<%- include("partials/header"); -%>
+<div class="post-data">
+  <div class="cont">
+    <img class="image" src="/img/model.png" alt="" />
+    <div class="name-title">
+      <strong> Naveen Nimmala </strong>
+      <p class="date-time"><%= datetime %> <i class="fa fa-globe"></i></p>
+    </div>
+  </div>
+  <h1 class="post-title"><%= title %></h1>
+  <p id="content"></p>
+</div>
+<a href="/editPost/<%= id %> %>"> 
+    <button type="button" class="btn btn-warning">Edit</button>
+  </a>
+  <a href="/deletePost/<%= id %> %>" onclick="return confirm('Are you sure you want to delete this item?');"> 
+    <button type="button" class="btn btn-danger">Delete</button>
+  </a>
+<script>
+  var $log = $(`#content`),
+    str = `<%- content %>`,
+    html = $.parseHTML(str);
+  $log.append(html);
+</script>
+
+<div class="post-button">
+  <a href="/">
+    <button type="button" class="btn btn-outline-dark">Back</button>
+  </a>
+</div>
+<!-- <div class="top-button">
+    <a href="/">
+    <button type="button" class="btn btn-success">Back</button>
+</a>
+</div> -->
+<%- include('partials/footer'); -%>

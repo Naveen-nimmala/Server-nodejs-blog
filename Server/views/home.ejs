@@ -1,0 +1,40 @@
+<%- include("partials/header"); -%>
+
+<div class="home-data">
+  <h1>Home</h1>
+  <p><%= startContent %></p>
+
+  <% for (var i = posts.length - 1 ; i >= 0 ;i--){ %>
+  <div class="cont">
+    <img class="image" src="/img/model.png" alt="" />
+    <div class="name-title">
+      <strong> Naveen Nimmala </strong>
+      <p class="date-time">
+        <%= posts[i].datetime %> <i class="fa fa-globe"></i>
+      </p>
+    </div>
+  </div>
+  <h1>
+    <a href="/posts/<%= posts[i].title %>"> <%= posts[i].title %> </a>
+    <a href="/editPost/<%= posts[i]._id%> %>" onclick="return confirm('Are you sure you want to edit this item?');"> 
+      <button type="button" class="btn btn-warning ">Edit</button>
+    </a>
+    <a href="/deletePost/<%= posts[i]._id%> %>" onclick="return confirm('Are you sure you want to delete this item?');"> 
+      <button type="button" class="btn btn-danger">Delete</button>
+    </a>
+  </h1>
+  <div>
+    <p class="home-content" id="<%= i %>"></p>
+    <hr />
+  </div>
+  <script>
+    var aTag = `<a href="/posts/<%=  posts[i].title %>">Read more</a>`;
+    var $log = $(`#<%- i %>`),
+      str = `<%- posts[i].content + "..." %>` + aTag,
+      html = $.parseHTML(str);
+    $log.append(html);
+  </script>
+  <%}%>
+</div>
+
+<%- include('partials/footer'); -%>

@@ -1,0 +1,25 @@
+<%- include("partials/header"); -%>
+<div class="home-data">
+    <h1>Home</h1>
+    <p><%= startContent %> </p>
+
+    <% for (var i = posts.length - 1 ; i >= 0 ;i--){ %>
+            <h1> <a href="/posts/<%= posts[i].title %>"> <%= posts[i].title %> </a></h1>
+            <p class="date-time"><%= posts[i].datetime %> </p> 
+            <div >
+                <p class= "home-content" id = "<%= i %>" > 
+                </p>
+                <hr>
+            </div>
+            
+            <script>
+                var aTag = `<a href="/posts/<%=  posts[i].title %>">Read more</a>`
+                var $log = $( `#<%- i %>` ),
+                str = `<%- posts[i].content.substring(0,100) + "..." %>` + aTag ,
+                html = $.parseHTML( str );  
+                $log.append(html);
+            </script> 
+    <%}%>
+    
+</div>
+<%- include('partials/footer'); -%>

@@ -1,0 +1,204 @@
+<div id="log">
+</div>
+
+
+<p class="home-content">
+    <%= post.content.substring(0,100) + "..." %>
+    <a href="/posts/<%=  post._id  %>">Read more</a>
+    <hr>
+</p>
+
+
+// var $log = $( "#log" ),str = '<%= post.content %>' , 
+// html = $.parseHTML( str );
+
+<script>
+    var $log = $( "#log" ),str = '<%= post.content %>' , 
+    html = $.parseHTML( str );
+    $log.append( html ); 
+    console.log(html)
+</script>
+
+
+
+// const htmlString = "<strong>Beware of the leopard</strong>";
+// const doc3 = parser.parseFromString(htmlString, "text/html");
+// main.body = doc3.body;
+// let main = document.querySelector("main");
+// let strHTML1 = '<%= post.content %>';
+// main.innerHTML = strHTML1;
+const jsdom = require("jsdom");
+const dom = new jsdom.JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+main.body = dom.body;
+// let parser = new DOMParser();
+// let doc = parser.parseFromString('<%= post.content %>', "text/html");
+// main.body = doc.body;
+
+// let frag = new DocumentFragment();
+// frag.append('<%= post.content %>')
+
+// var stringToHTML = function (strHTML1) {
+//     var parser = new DOMParser();
+//     var doc = parser.parseFromString('<%= post.content %>', 'text/html');
+//     main.body = doc.body;
+// };
+
+
+<% posts.reverse().forEach(function(post){ %>
+    <h1> <a href="/posts/<%= post._id %>"> <%= post.title %> </a></h1>
+    <p class="date-time"><%= post.datetime %> </p> 
+    <p class="home-content">
+    <% var data = "hello, <b> Naveen</b> jQuery" %>
+    <% var strng =  post.content %>
+        <script>
+            var count ;
+            var $log = $( ".home-content" ),
+            str = "<%- post.content %>"
+            console.log('<%- strng %>');
+            html = $.parseHTML( str );
+            $log.append( html );
+            count = count + 1;
+            console.log('<%- count %>')
+    </script>
+<% }) %>
+
+
+
+<%  var j = 0; %>
+<% var strng =  posts[i].content %>
+<% for (k = j ; k < 1 ;k++){ %>
+
+
+
+
+posts = [
+{
+    content: "Hello World 1"
+},
+{
+    content: "Hello World 2"
+},
+{
+    content: "Hello World 3"
+}
+]
+
+    <% for (var i = 0 ; i < posts.length ;i++){ %>
+        <div class="home-content">
+        </div>
+            <script>
+                var $log = $( ".home-content" ),
+                str = `<%- posts[i].content %>`,
+                html = $.parseHTML( str );               
+                $log.appendTo(html)
+            </script>
+    <%}%>
+
+
+
+    str = `<%- posts[i].content %>`,
+
+
+
+
+
+
+
+    // var $data = $( '<%- i %>' ),
+    // str = '<%- posts[i].content %>',
+    // html = $.parseHTML( str );               
+    // $data.append(html)
+
+    // var el = document.createElement( 'p' );
+    // el.innerHTML = 'Hello';
+
+     // Live NodeList of your anchor elements
+
+    parser = new DOMParser();
+    newEle = document.getElementById('<%- i %>');
+    
+    htmlString = '<%- posts[i].content %>' ;
+    newEle = $.parseHTML( '<%- posts[i].content %>' );
+    // doc = parser.parseFromString(htmlString, "text/html");
+    // console.log(doc.documentElement.textContent);
+    // newEle.innerHTML = doc.documentElement.textContent ;
+    // new.appendChild(newEle)
+    // $data.append(doc.documentElement.textContent);
+
+    ----------------
+    9 june
+
+
+    <div>
+        <p class= "home-content" id = "post-id" >
+    
+        </p>
+        <hr>
+    </div>
+
+
+    <script>
+        var $log = $( `#<%- i %>` ),
+        str = `<%- posts[i].content %>`,
+        html = $.parseHTML( str );               
+        $log.append(html);
+    </script>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+<div class="form">
+
+    <form action="/login" method="post">
+        <input type="text" name ="userName" placeholder=""/>
+        <input type="password" name="password" id="password" placeholder=""/>
+        <button>LOGIN</button>
+    </form>
+        <a href="/signup">
+            <button type="button" class="">SIGN UP</button>
+        </a>
+</div>
+</body>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>SignUP</title>
+</head>
+<body>
+    <div class="form">
+        <form action="/signup" method="post">
+            <input name ="userName"  placeholder=""/>
+            <input type="password" name ="password"  id="password" placeholder=""/>
+            <button>SIGNUP</button>
+        </form>
+    </div>
+</body>
+</html>
+<body>
+</body>
+</html>
+
