@@ -39,12 +39,11 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
-app.use('/posts', postRoutes);
-app.use('/compose', composePost);
+
 
 // Time
 
-
+var profileData = 123;
 app.use(cors());
 
 app.use(express.json({limit: '50mb'}));
@@ -123,7 +122,9 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
+const isLoggedIn = {
+  user :false
+}
 passport.use(new GoogleStrategy({
     clientID: "549870859910-e4pbat0icieticfp7uinm9bnuj9j4kgp.apps.googleusercontent.com",
     clientSecret: "O3yeuP2UicS9Y6_HO06h_7zF",
@@ -131,7 +132,7 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+    profileData = profile;
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -148,17 +149,6 @@ var posts = [];
 
 app.get('/', function (req, res){
   Blog.find({}, function(err, fountItems){
-    // if (fountItems.length === 0){
-    //     const defaultBlog = new Blog ({
-    //       title: "Hello",
-    //       content: "world",
-    //       // datetime: dateTime
-    //     });
-      //  Blog.insertMany(defaultBlog, function(err){
-      //  })  
-    // }
- 
-    
     res.render("home", {
       startContent: homeStartingContent,
       posts: fountItems   
@@ -171,12 +161,12 @@ app.get('/auth/google',
 );
 
 app.get('/auth/google/secrets', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
+    isLoggedIn.user = true;
     // Successful authentication, redirect home.
     res.redirect('/about');
 });
-
 
 
 app.get("/about", function (req, res){
@@ -190,14 +180,24 @@ app.get("/about", function (req, res){
 })
 
 
+// app.use('/compose', composePost);
+
+
 app.get("/contact", function (req, res){
-  res.render("contact", {contactMe: contactContent})
+  if (req.isAuthenticated()){
+    console.log("User authnticated")
+    res.render("contact", {contactMe: contactContent})
+  } else {
+    res.redirect("/")
+    console.log("User not authnticated")
+  }
 });
 
 
 
 app.get("/logout", function (req, res){
   req.logout();
+  isLoggedIn.user = false;
   res.redirect("/");
 })
 
@@ -284,7 +284,7 @@ app.post("/login", function(req, res){
     }else{
       passport.authenticate("local")(req, res, function(){
         console.log("login success")
-        res.redirect("/about")
+        res.redirect("/")
       })
     }
   })
@@ -309,8 +309,8 @@ app.get("/signup", function(req, res){
 })
 
 app.post("/signup", function (req, res){
-  console.log(req.body.userName)
-  console.log(req.body.password)
+  // console.log(req.body.userName)
+  // console.log(req.body.password)
 
   User.register({username: req.body.userName}, req.body.password, function (err, user){
     if (err){
@@ -338,4 +338,10 @@ app.post("/signup", function (req, res){
 // router.listen(POST, function() {
 //   console.log("Server started on port 5000");
 // });
+export default isLoggedIn;
 
+export {profileData};
+
+
+app.use('/compose', composePost);
+app.use('/posts', postRoutes);
