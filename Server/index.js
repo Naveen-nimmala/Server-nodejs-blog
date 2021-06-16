@@ -125,6 +125,9 @@ passport.deserializeUser(function(id, done) {
 const isLoggedIn = {
   user :false
 }
+
+var googleIDNumber = 1234413314;
+
 passport.use(new GoogleStrategy({
     clientID: "549870859910-e4pbat0icieticfp7uinm9bnuj9j4kgp.apps.googleusercontent.com",
     clientSecret: "O3yeuP2UicS9Y6_HO06h_7zF",
@@ -132,28 +135,60 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    profileData = profile;
+    profileData = profile
+    // console.log(profileData)
+    googleIDNumber = profile.id
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
   }
 ));
 
+var RandomNumber = 10;
+var RandomNumberlg =20;
+var editID =20;
+var deleteID =20;
+
+RandomNumber = Math.floor((Math.random() * 10000) + 1);
 
 var posts = [];
 
-
-
-
-
+var visibility = false;
 
 app.get('/', function (req, res){
-  Blog.find({}, function(err, fountItems){
-    res.render("home", {
-      startContent: homeStartingContent,
-      posts: fountItems   
+  RandomNumber = Math.floor((Math.random() * 10000) + 1);
+  RandomNumberlg = Math.floor((Math.random() * 1000000) + 1);
+  editID = Math.floor((Math.random() * 10000000) + 1);
+  deleteID = Math.floor((Math.random() * 10000000) + 1);
+  if (req.isAuthenticated()){
+    visibility = true;
+    Blog.find({}, function(err, fountItems){
+      res.render("home", {
+        startContent: homeStartingContent,
+        posts: fountItems,
+        visibility: visibility,
+        googleNO: googleIDNumber,
+        gID: RandomNumber,
+        lgID: RandomNumberlg,
+        editID: editID,
+        deleteID: deleteID
+      });
     });
-  });
+  }else{
+    Blog.find({}, function(err, fountItems){
+      visibility = false;
+      res.render("home", {
+        startContent: homeStartingContent,
+        posts: fountItems,
+        visibility: visibility,
+        googleNO: googleIDNumber,
+        gID: RandomNumber,
+        lgID: RandomNumberlg,
+        editID: editID,
+        deleteID: deleteID
+      });
+    });
+  }
 });
 
 app.get('/auth/google',
@@ -164,15 +199,19 @@ app.get('/auth/google/secrets',
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
     isLoggedIn.user = true;
+    visibility = true;
     // Successful authentication, redirect home.
     res.redirect('/about');
 });
 
 
 app.get("/about", function (req, res){
+  RandomNumber = Math.floor((Math.random() * 10000) + 1);
+  RandomNumberlg = Math.floor((Math.random() * 1000000) + 1);
   if (req.isAuthenticated()){
     console.log("User authnticated")
-    res.render("about", {aboutMe: aboutContent});
+    visibility = true;
+    res.render("about", {aboutMe: aboutContent, visibility: visibility , googleNO: googleIDNumber, gID: RandomNumber, lgID: RandomNumberlg});
   } else {
     res.redirect("/")
     console.log("User not authnticated")
@@ -184,9 +223,12 @@ app.get("/about", function (req, res){
 
 
 app.get("/contact", function (req, res){
+  RandomNumber = Math.floor((Math.random() * 10000) + 1);
+  RandomNumberlg = Math.floor((Math.random() * 1000000) + 1);
   if (req.isAuthenticated()){
+    visibility = true;
     console.log("User authnticated")
-    res.render("contact", {contactMe: contactContent})
+    res.render("contact", {contactMe: contactContent, visibility: visibility, googleNO: googleIDNumber, gID: RandomNumber, lgID: RandomNumberlg})
   } else {
     res.redirect("/")
     console.log("User not authnticated")
@@ -198,14 +240,23 @@ app.get("/contact", function (req, res){
 app.get("/logout", function (req, res){
   req.logout();
   isLoggedIn.user = false;
+  visibility = false;
   res.redirect("/");
 })
 
 
 app.get("/editPost/:postID",  async (req, res) => {
+
+  RandomNumber = Math.floor((Math.random() * 10000) + 1);
+  RandomNumberlg = Math.floor((Math.random() * 1000000) + 1);
   let oldBlog = await Blog.findById(req.params.postID, function (err, user){
   })
-  res.render("edit", {blog: oldBlog});
+  if (req.isAuthenticated()){
+    visibility = true;
+    res.render("edit", {blog: oldBlog, visibility: visibility, googleNO: googleIDNumber, gID: RandomNumber, lgID: RandomNumberlg});
+  }else{
+    res.redirect('/')
+  }
 
 });
 

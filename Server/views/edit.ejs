@@ -46,6 +46,17 @@
       ["view", ["fullscreen", "codeview", "help", "undo", "redo"]],
     ],
   });
+  
+  if (`<%- visibility %>` == 'true' ){
+      document.getElementById(`<%- googleNO %>`).style.visibility= 'visible';
+      document.getElementById(`<%- lgID %>`).style.visibility= 'visible';
+      document.getElementById(`<%- gID %>`).style.display= 'none';
+    }else{
+      document.getElementById(`<%- googleNO %>`).style.display= 'none';
+      document.getElementById(`<%- lgID %>`).style.display= 'none';
+      document.getElementById(`<%- gID %>`).style.visibility= 'visible';
+      
+    }
 </script>
 
 <%- include('partials/footer'); -%>

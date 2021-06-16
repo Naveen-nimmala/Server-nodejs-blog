@@ -1,4 +1,15 @@
 <%- include("partials/header"); -%>
 <h1>About</h1>
 <p> <%= aboutMe %>  </p>
+
+<script>
+   if (`<%- visibility %>` == 'true' ){
+      document.getElementById(`<%- googleNO %>`).style.visibility= 'visible';
+      document.getElementById(`<%- gID %>`).style.display= 'none';
+    }else{
+      document.getElementById(`<%- googleNO %>`).style.display= 'none';
+      document.getElementById(`<%- gID %>`).style.visibility= 'visible';
+      
+    }
+</script>
 <%- include('partials/footer'); -%>

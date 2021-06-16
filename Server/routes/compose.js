@@ -27,22 +27,24 @@ router.get("/", function (req, res){
 console.log( profileData.id )
 if (isLoggedIn.user){
     if ( profileData.id == 108318296961391931070 ){
-        res.render("compose")
+        res.render("compose", {googleNO: profileData.id} )
     }else{
-        Blog.find({}, function(err, fountItems){
-            res.render("home", {
-              startContent: homeStartingContent,
-              posts: fountItems   
-            });
-          });
+        // Blog.find({}, function(err, fountItems){
+        //     res.render("home", {
+        //       startContent: homeStartingContent,
+        //       posts: fountItems,
+        //       visibility: false
+        //     });
+        //   });
     }
 }else{
-    Blog.find({}, function(err, fountItems){
-        res.render("home", {
-          startContent: homeStartingContent,
-          posts: fountItems   
-        });
-      });
+    // Blog.find({}, function(err, fountItems){
+    //     res.render("home", {
+    //       startContent: homeStartingContent,
+    //       posts: fountItems,
+    //       visibility: false  
+    //     });
+    //   });
     console.log("user no loggedin")
 }
 });
